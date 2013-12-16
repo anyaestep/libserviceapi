@@ -41,7 +41,7 @@ object LibrarySpec extends Specification with Mockito {
       libraryService.getBookPath("1", "1") returns Future({Some("aaa")})
      
       // there is a book 1 and a student 1 and student can see book
-      val resultOk = libraryController.checkout("1", "1")(FakeRequest())
+      val resultOk: Future[SimpleResult] = libraryController.checkout("1", "1")(FakeRequest())
 
       status(resultOk) must equalTo(OK)
       contentType(resultOk) must beSome("application/java")

@@ -18,6 +18,9 @@ case class DbMsg[T](q: anorm.SimpleSql[Row], f: (SqlRow) => T)
   
 object DbMsg
   
+/**
+ * Async db execution for a given SQL and Row Mapper.
+ */
 class DbActor extends Actor {
   def receive = {
     case DbMsg(q, f) => 
@@ -29,6 +32,9 @@ class DbActor extends Actor {
   }
 }
 
+/**
+ * Service is responsible for library related db interactions
+ */
 class LibraryService {
   val dbActor = Akka.system.actorOf(Props[DbActor], name = "dbActor")
   implicit val timeout = Timeout(2 seconds)
@@ -65,6 +71,4 @@ class LibraryService {
                        and bs.book_id = {bookId})""")
         .on("studentId" -> studentId, "bookId" -> bookId), {row => row[String]("content_path")})).mapTo[Option[String]]
   }
-  
-  def getFile(path: String) = new java.io.File(path)
 }
