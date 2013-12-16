@@ -19,3 +19,6 @@ CREATE TABLE libdb.book_school (
 
 ALTER TABLE libdb.book_school ADD CONSTRAINT fk_book_school FOREIGN KEY ( book_id ) REFERENCES libdb.book( book_id );
 
+insert into libdb.book values ('1', '1','/tmp/audit.log');
+insert into libdb.book_school values ('1', '1');
+insert into libdb.student_school values ('1', '1');
